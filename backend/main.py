@@ -14,7 +14,7 @@ import firebase_admin
 from firebase_admin import credentials, storage
 import uuid
 
-cred = credentials.Certificate("lerno-cd286-firebase-adminsdk-fbsvc-be86fea83e.json")
+cred = credentials.Certificate("lerno-cd286-firebase-adminsdk-fbsvc-222d396b1f.json")
 firebase_admin.initialize_app(cred, {"storageBucket": "lerno-cd286.firebasestorage.app"})
 
 bucket = storage.bucket()

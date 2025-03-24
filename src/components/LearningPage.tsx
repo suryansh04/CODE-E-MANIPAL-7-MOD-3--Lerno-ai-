@@ -91,8 +91,8 @@ const LearningPage = () => {
   const answer = currentSlide.assessment.multiple_choice.choices;
   const question = currentSlide.assessment.multiple_choice.question;
   const correctAnswerIndex =
-    currentSlide.assessment.multiple_choice.correctAnswerIndex;
-
+    currentSlide.assessment.multiple_choice.correct_index;
+  console.log(correctAnswerIndex);
   function handleAnswerClick(currIndex: number) {
     setSelectedAnswerIndex(currIndex);
     setHasAnswered(true);
@@ -174,7 +174,7 @@ const LearningPage = () => {
         </div>
       </div>
 
-      {/* Modified Grid Layout */}
+      {/*  Grid Layout */}
       <AnimatePresence mode="wait" custom={direction}>
         <motion.div
           key={currentSlideIndex}
@@ -185,7 +185,7 @@ const LearningPage = () => {
           exit="exit"
           className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 w-full max-w-6xl"
         >
-          {/* Box 1: Video - MODIFIED to use Firebase Storage videos */}
+          {/* Box 1: Video -   use Firebase Storage videos */}
           <div className="relative group overflow-hidden rounded-xl border border-white/10 md:col-span-2 h-72 md:h-96 bg-zinc-900/50 backdrop-blur-sm transition-all duration-300 hover:border-white/30 hover:bg-zinc-900/70">
             <div className="absolute inset-0 bg-gradient-to-br from-indigo-500/20 via-purple-500/20 to-pink-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:20px_20px]"></div>
@@ -346,3 +346,5 @@ const LearningPage = () => {
 };
 
 export default LearningPage;
+
+// __________________________________-------------------------------------------------------------------------------------------

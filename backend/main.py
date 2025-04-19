@@ -24,7 +24,7 @@ if not anthropic_api_key:
     raise ValueError("ANTHROPIC_API_KEY not found in environment variables or .env file")
 
 model = ChatAnthropic(
-    model_name="claude-3-5-sonnet-20240620",
+    model_name="claude-3-7-sonnet-20250219",
     anthropic_api_key=anthropic_api_key,
     temperature=0.7,
     max_tokens=4000
@@ -252,34 +252,36 @@ def generate_animation_code(narration, animation_description, title, scene_numbe
             scene_class_name = "AnimationScene"
     
     prompt = """
-1. Given the scene description and title, write COMPLETE, READY-TO-RUN Manim code for this scene in 3Blue1Brown style. This scene should be between 5 and 10 seconds and contain a short text blurb describing the scene.
-2. USE EXCLUSIVELY MANIM COMMUNITY EDITION (ManimCE) VERSION 0.19.0 SYNTAX.
-3. Always include this import statement at the top: from manim import *
-4. Define a complete Manim Scene class. The name of the class should be "{0}" (NOT "Scene" as this would shadow the base Scene class).
-5. DO NOT USE ANY CLASSES OR FUNCTIONS THAT DON'T EXIST IN MANIM CE 0.19.0. Specifically:
+0. Make the animation as simple as possible and just use the basic Manim functions.
+1.Instead of "outer_radius" use "radius" 
+2. Given the scene description and title, write COMPLETE, READY-TO-RUN Manim code for this scene in 3Blue1Brown style. This scene should be between 5 and 10 seconds and contain a short text blurb describing the scene.
+3. USE EXCLUSIVELY MANIM COMMUNITY EDITION (ManimCE) VERSION 0.19.0 SYNTAX.
+4. Always include this import statement at the top: from manim import *
+5. Define a complete Manim Scene class. The name of the class should be "{0}" (NOT "Scene" as this would shadow the base Scene class).
+6. DO NOT USE ANY CLASSES OR FUNCTIONS THAT DON'T EXIST IN MANIM CE 0.19.0. Specifically:
    - DO NOT use ThoughtBubble (not built-in) - use Text, MathTex, SurroundingRectangle, or Circle instead
    - DO NOT use deprecated methods like add_tip() or parameters like scale_tips
    - DO NOT create constructor conflicts (e.g., avoid multiple values for parameters like 'outer_radius' in AnnularSector)
    - DO NOT use Brace.get_text() (deprecated) - use Tex or MathTex and position manually
    - DO NOT use custom functions without defining them
-6. For arrows/vectors, ALWAYS use: Arrow(start=ORIGIN, end=[x,y,0], buff=0, color=YELLOW)
-7. For axes, use: axes = Axes(x_range=[-5, 5, 1], y_range=[-3, 3, 1]) format.
-8. For text, use Text() or MathTex() for math equations. Ensure that font_size is small (< 24pt).
-9. Use these standard animations: Create(), Write(), FadeIn(), FadeOut(), Transform(), GrowArrow(), etc.
-10. Always use the explicit coordinate system [x, y, 0] for 2D points (Manim works in 3D space).
-11. Every scene must have animations using self.play() followed by self.wait() commands.
-12. Ensure any text, diagrams, or formulas fit fully on the screen.
-13. Use default Manim colors: RED, GREEN, BLUE, YELLOW, PURPLE, ORANGE, WHITE.
-14. ALWAYS USE 2-AXIS DIAGRAMS for mathematical concepts.
-15. DO NOT CREATE PARAMETERS THAT DON'T EXIST for Manim objects.
-16. Text should be concise and to the point, no more than 10 words.
-17. If the description is vague, create a scene that is related to the title.
-18. Every scene must have an animation. Also if you add topic name/headline, ALWAYS ADD IT TO THE BOTTOM OF THE ANIMATION.
-19. There should be just manim code with the necessary import and class definition, no other comment or text.
-20. IF YOU NEED A THOUGHT BUBBLE, create one using Circle and Polygon objects, DO NOT use any ThoughtBubble class.
-21. For AnnularSector, use only the parameters that exist in version 0.19.0, and avoid duplicate parameters.
-22. NEVER USE THE PARAMETER 'scale_tips' - IT DOES NOT EXIST IN MANIM CE 0.19.0
-
+7. For arrows/vectors, ALWAYS use: Arrow(start=ORIGIN, end=[x,y,0], buff=0, color=YELLOW)
+8. For axes, use: axes = Axes(x_range=[-5, 5, 1], y_range=[-3, 3, 1]) format.
+9. For text, use Text() or MathTex() for math equations. Ensure that font_size is small (< 24pt).
+10. Use these standard animations: Create(), Write(), FadeIn(), FadeOut(), Transform(), GrowArrow(), etc.
+11. Always use the explicit coordinate system [x, y, 0] for 2D points (Manim works in 3D space).
+12. Every scene must have animations using self.play() followed by self.wait() commands.
+13. Ensure any text, diagrams, or formulas fit fully on the screen.
+14. Use default Manim colors: RED, GREEN, BLUE, YELLOW, PURPLE, ORANGE, WHITE.
+15. ALWAYS USE 2-AXIS DIAGRAMS for mathematical concepts.
+16. DO NOT CREATE PARAMETERS THAT DON'T EXIST for Manim objects.
+17. Text should be concise and to the point, no more than 10 words.
+18. If the description is vague, create a scene that is related to the title.
+19. Every scene must have an animation. Also if you add topic name/headline, ALWAYS ADD IT TO THE BOTTOM OF THE ANIMATION.
+20. There should be just manim code with the necessary import and class definition, no other comment or text.
+21. IF YOU NEED A THOUGHT BUBBLE, create one using Circle and Polygon objects, DO NOT use any ThoughtBubble class.
+22. For AnnularSector, use only the parameters that exist in version 0.19.0, and avoid duplicate parameters.
+23. NEVER USE THE PARAMETER 'scale_tips' - IT DOES NOT EXIST IN MANIM CE 0.19.0
+24.DON'T DO THIS "```python" IN THE CODE BLOCK, JUST WRITE THE MANIM CODE.
 Here is an example of valid Manim CE 0.19.0 code:
 
 from manim import *

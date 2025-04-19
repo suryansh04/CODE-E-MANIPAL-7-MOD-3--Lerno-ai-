@@ -10,6 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@11labs/react": "^0.1.0",
     "@google/generative-ai": "^0.24.0",
     "@tailwindcss/vite": "^4.0.14",
     "@tsparticles/react": "^3.0.0",
@@ -18,7 +19,8 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cors": "^2.8.5",
-    "elevenlabs": "^1.54.0",
+    "elevenlabs": "^1.56.0",
+    "elevenlabs-js": "^1.2.6",
     "express": "^4.21.2",
     "firebase": "^11.5.0",
     "framer-motion": "^12.5.0",
@@ -28,6 +30,7 @@
     "nodemon": "^3.1.9",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-text-to-speech": "^1.4.3",
     "react-tsparticles": "^2.12.2",
     "simplex-noise": "^4.0.3",
     "tailwind-merge": "^3.0.2",

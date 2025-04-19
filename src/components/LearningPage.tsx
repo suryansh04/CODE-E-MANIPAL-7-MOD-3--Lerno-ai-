@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import AIChatbot from "./AIChatbot";
 import { HoverBorderGradient } from "@/ui/hover-border-gradient";
 import { AnimatedShinyText } from "@/ui/animated-shiny-text";
 import { cn } from "@/lib/utils";
@@ -150,6 +151,19 @@ const LearningPage = () => {
     handleNextSlide();
   }
 
+  useEffect(() => {
+    if (currentSlide.narration) {
+      const synth = window.speechSynthesis;
+      const utterance = new SpeechSynthesisUtterance(currentSlide.narration);
+      utterance.lang = "en-US";
+      utterance.pitch = 1;
+      utterance.rate = 1;
+      utterance.volume = 1;
+      synth.cancel(); // Stops any ongoing speech before speaking the new text
+
+      synth.speak(utterance);
+    }
+  }, [currentSlide.narration]);
   return (
     <div className="flex flex-col items-center justify-center w-full min-h-screen bg-black p-4 md:p-8">
       <div className="z-10 flex mb-8">
@@ -221,7 +235,7 @@ const LearningPage = () => {
                     autoPlay
                     muted
                     loop
-                    className="object-fit rounded-lg"
+                    className="object-contain rounded-lg"
                     key={videoURLs[currentVideoIndex]}
                   ></video>
                 </div>
@@ -270,7 +284,7 @@ const LearningPage = () => {
           </div>
 
           {/* Box 2: MCQ Question & Answers - Now spans 2/3 of second row */}
-          <div className="relative group overflow-hidden rounded-xl border border-white/10 p-4 min-h-[18rem] h-auto md:col-span-2 bg-zinc-900/50 backdrop-blur-sm transition-all duration-300 hover:border-white/30 hover:bg-zinc-900/70">
+          <div className="relative group overflow-hidden rounded-xl border border-white/10 p-4 min-h-[18rem] h-auto bg-zinc-900/50 backdrop-blur-sm transition-all duration-300 hover:border-white/30 hover:bg-zinc-900/70">
             <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-purple-500/20 to-cyan-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
             <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:20px_20px]"></div>
             <div className="relative z-10 flex flex-col h-full">
@@ -307,6 +321,14 @@ const LearningPage = () => {
             <div className="absolute -inset-px bg-gradient-to-r from-blue-500/30 via-transparent to-purple-500/30 rounded-xl opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500"></div>
           </div>
 
+          {/* Box 3: AI Chatbot - Same height as the Quiz box */}
+          <div className="md:col-span-1 h-full">
+            <AIChatbot
+              lessonTitle={currentSlide.title}
+              lessonContent={currentSlide.narration}
+              currentQuestion={currentSlide.assessment.multiple_choice.question}
+            />
+          </div>
           {/* Box 4: Next button - Now takes up 1/3 of second row */}
           <div className="relative group overflow-hidden rounded-xl border border-white/10 p-6 bg-zinc-900/50 backdrop-blur-sm transition-all duration-300 hover:border-white/30 hover:bg-zinc-900/70">
             <div className="absolute inset-0 bg-gradient-to-br from-amber-500/20 via-orange-500/20 to-rose-500/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
